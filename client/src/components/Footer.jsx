@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from '../assets/logo.png'
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram, FaEnvelope } from 'react-icons/fa'
 import { GiRotaryPhone } from 'react-icons/gi'
 import { SlEnvolope } from 'react-icons/sl'
