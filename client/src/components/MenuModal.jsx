@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Joi from 'joi';
 import axios from 'axios';
+import { useMenu } from '../context/MenuContext';
 
 const api = import.meta.env.VITE_ENV == "LOCAL" ?  import.meta.env.VITE_BASEAPI  : ''
 
@@ -10,6 +11,8 @@ const MenuModal = ({ isOpen, onClose, onSuccess }) => {
     name: '',
     description: ''
   });
+  const {fetchMenus} = useMenu()
+
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -87,6 +90,8 @@ const MenuModal = ({ isOpen, onClose, onSuccess }) => {
         onSuccess(response.data);
         onClose();
         setFormData({ name: '', description: '' });
+        fetchMenus()
+        
       }
     } catch (error) {
       setErrors({

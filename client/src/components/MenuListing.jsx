@@ -3,6 +3,7 @@ import axios from 'axios'
 import topleftimage from '../assets/topleftimage.png'
 import bottomright from '../assets/bottomright.png'
 import menubg from '../assets/menubg.png'
+import { useMenu } from '../context/MenuContext'
 
 const api = import.meta.env.VITE_ENV == "LOCAL" ?  import.meta.env.VITE_BASEAPI  : ''
 
@@ -10,21 +11,28 @@ const MenuListing = ({ category }) => {
   const [menuItems, setMenuItems] = useState([])
   const [menuInfo, setMenuInfo] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const {getMenu , fetchMenuItems} = useMenu()
 
   useEffect(() => {
     if (category) {
-      fetchMenuItems()
+      handleFetchMenuItems()
     }
   }, [category])
 
-  const fetchMenuItems = async () => {
+  const handleFetchMenuItems = async () => {
     try {
       setIsLoading(true)
-      const menuResponse = await axios.get(`${api}/api/menus/${category}`)
-      setMenuInfo(menuResponse.data)
+      const menuResponse = await getMenu(category)
+
+      console.log("menuresponse",menuResponse);
       
-      const itemsResponse = await axios.get(`${api}/api/menu-items/menu/${category}`)
-      setMenuItems(itemsResponse.data)
+      setMenuInfo(menuResponse)
+      
+      const itemsResponse = await fetchMenuItems(category)
+
+      console.log(itemsResponse);
+      
+      setMenuItems(itemsResponse)
       setIsLoading(false)
     } catch (error) {
       console.error('Failed to fetch menu items:', error)

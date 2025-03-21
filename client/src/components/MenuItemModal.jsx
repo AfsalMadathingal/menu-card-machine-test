@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Joi from 'joi';
 import axios from 'axios';
+import { useMenu } from '../context/MenuContext';
 
 
 const api = import.meta.env.VITE_ENV == "LOCAL" ?  import.meta.env.VITE_BASEAPI  : ''
@@ -14,11 +15,10 @@ const MenuItemModal = ({ isOpen, onClose, onSuccess }) => {
     menuId: ''
   });
 
-  const [menus, setMenus] = useState([]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const {menus ,fetchMenus , isLoading} = useMenu();
 
   useEffect(() => {
     if (isOpen) {
@@ -31,16 +31,6 @@ const MenuItemModal = ({ isOpen, onClose, onSuccess }) => {
     }
   }, [isOpen]);
 
-  const fetchMenus = async () => {
-    try {
-      const response = await axios.get(`${api}/api/menus`);
-      setMenus(response.data);
-    } catch (error) {
-      console.error('Failed to fetch menus:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // Joi validation schema
   const schema = Joi.object({

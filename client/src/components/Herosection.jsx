@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import heroimage from "../assets/herosection.jpeg";
 import MenuModal from "./MenuModal";
 import MenuItemModal from "./MenuItemModal";
+import { useMenu } from "../context/MenuContext";
 
 const Herosection = () => {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);

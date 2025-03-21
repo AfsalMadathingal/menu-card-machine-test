@@ -4,14 +4,18 @@ import Navbar from "./components/Navbar";
 import Herosection from "./components/Herosection";
 import Menu from "./pages/Menu";
 import Footer from "./components/Footer";
+import { MenuProvider } from "./context/MenuContext";
+
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Herosection />
-      <Menu />
-      <Footer />
-    </div>
+    <MenuProvider>
+      <div>
+        <Navbar />
+        <Herosection />
+        <Menu />
+        <Footer />
+      </div>
+    </MenuProvider>
   );
 }
 
